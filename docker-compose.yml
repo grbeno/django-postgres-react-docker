@@ -1,0 +1,41 @@
+services:
+  backend:
+    build: .
+    container_name: my_helloworld_react
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - "SECRET_KEY=${SECRET_KEY}" # .env
+      - "DEBUG=True"
+      - "DATABASE_URL=postgres://postgres:postgres@db:5432/postgres"
+      - "SSL_REQUIRED=False"
+  
+  frontend:
+    build: ./frontend
+    container_name: helloworld_react_frontend
+    volumes:
+      - .:/frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_URL=http://localhost:8000
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:16.2
+    container_name: helloworld_react_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+volumes:
+  postgres_data:
