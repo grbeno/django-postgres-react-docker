@@ -1,6 +1,6 @@
 ## Django-Postgres-React-Docker basic-startproject example
 
-### [Django, Postgres, React](https://github.com/grbeno/django-postgres-docker)
+#### This repo is based on: [Django, Postgres, React](https://github.com/grbeno/django-postgres-docker)
 ---
 ### Setting up React
 
